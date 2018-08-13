@@ -61,7 +61,7 @@ SERVER_TESTS = $(wildcard server-tests/*.t)
 # A smiliar naming convention is used for tests. 
 
 
-default:
+default: build-libs
 
 .SILENT:
 
@@ -220,7 +220,7 @@ deploy-all: deploy-client deploy-service
 # the application programming interface libraries, command
 # line scripts, and associated reference documentation.
 
-deploy-client: deploy-libs deploy-scripts deploy-docs vars
+deploy-client: build-libs deploy-libs deploy-scripts deploy-docs vars
 
 deploy-scripts: deploy-perl-scripts
 
@@ -230,7 +230,7 @@ deploy-scripts: deploy-perl-scripts
 # command line scripts that provide command-based execution of
 # individual API functions and aggregated sets of API functions.
 
-deploy-libs: build-libs
+deploy-libs: 
 	rsync --exclude '*.bak*' -arv lib/. $(TARGET)/lib/.
 
 # Deploying scripts needs some special care. They need to run
