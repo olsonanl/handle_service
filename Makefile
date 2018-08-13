@@ -61,7 +61,7 @@ SERVER_TESTS = $(wildcard server-tests/*.t)
 # A smiliar naming convention is used for tests. 
 
 
-default:
+default: build-libs
 
 .SILENT:
 
@@ -220,7 +220,7 @@ deploy-all: deploy-client deploy-service
 # the application programming interface libraries, command
 # line scripts, and associated reference documentation.
 
-deploy-client: deploy-libs deploy-scripts deploy-docs vars
+deploy-client: build-libs deploy-libs deploy-scripts deploy-docs vars
 
 # The deploy-libs and deploy-scripts targets are used to recognize
 # and delineate the client types, mainly a set of libraries that
@@ -228,7 +228,7 @@ deploy-client: deploy-libs deploy-scripts deploy-docs vars
 # command line scripts that provide command-based execution of
 # individual API functions and aggregated sets of API functions.
 
-deploy-libs: build-libs
+deploy-libs: 
 	rsync --exclude '*.bak*' -arv lib/. $(TARGET)/lib/.
 
 # Deploying scripts needs some special care. They need to run
@@ -325,6 +325,7 @@ compile-docs: build-libs
 
 build-libs:
 	compile_typespec \
+		--patric \
 		--psgi $(SERVICE_PSGI)  \
 		--impl Bio::KBase::$(SERVICE_NAME)::$(SERVICE_NAME)Impl \
 		--service Bio::KBase::$(SERVICE_NAME)::Service \

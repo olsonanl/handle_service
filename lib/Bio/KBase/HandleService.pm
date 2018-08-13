@@ -2,7 +2,7 @@ package Bio::KBase::HandleService;
 use strict;
 
 use Bio::KBase::AbstractHandle::Client;
-use Bio::KBase::AuthToken;
+use P3AuthToken;
 
 use LWP::UserAgent;
 use HTTP::Request::Common; # qw($DYNAMIC_FILE_UPLOAD);
@@ -68,7 +68,7 @@ sub upload {
 	  $self->new_handle()
 	    or die "could not get new handle";
 
-	my $tok = Bio::KBase::AuthToken->new();
+	my $tok = P3AuthToken->new();
 
 	my $url = $handle->{url} . "/node/" . $handle->{id};
 	my $auth_header;
@@ -125,7 +125,7 @@ sub download {
 	die "$path is not writable" unless -d $path && -w $path && -x $path;
 	die "$outfile already exists" if -e $outfile;
 
-	my $tok = Bio::KBase::AuthToken->new();
+	my $tok = P3AuthToken->new();
 
 	my $url = $handle->{url} . "/node/" . $handle->{id};
 	my @auth_header;
@@ -170,7 +170,7 @@ sub upload_metadata {
         my $id  = $handle->{id}  or die "no id in handle";
         my $url = $handle->{url} or die "no url in handle";
 
-        my $tok = Bio::KBase::AuthToken->new();
+        my $tok = P3AuthToken->new();
 
         if($handle->{type} eq "shock") {
 		my $url = $handle->{url} . "/node/" . $handle->{id};
@@ -201,7 +201,7 @@ sub download_metadata {
         die "$path is not writable" unless -d $path && -w $path && -x $path;
         die "$outfile already exists" if -e $outfile;
 
-        my $tok = Bio::KBase::AuthToken->new();
+        my $tok = P3AuthToken->new();
 
         my $url = $handle->{url} . "/node/" . $handle->{id};
         my $auth_header;
