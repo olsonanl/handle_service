@@ -225,42 +225,6 @@ deploy-client: build-libs deploy-libs deploy-scripts deploy-docs vars
 deploy-libs: 
 	rsync --exclude '*.bak*' -arv lib/. $(TARGET)/lib/.
 
-# Deploying scripts needs some special care. They need to run
-# in a certain runtime environment. Users should not have
-# to modify their user environments to run kbase scripts, other
-# than just sourcing a single user-env script. The creation
-# of this user-env script is the responsibility of the code
-# that builds all the kbase modules. In the code below, we
-# run a script in the dev_container tools directory that 
-# wraps perl scripts. The name of the perl wrapper script is
-# kept in the WRAP_PERL_SCRIPT make variable. This script
-# requires some information that is passed to it by way
-# of exported environment variables in the bash script below.
-#
-# What does it mean to wrap a perl script? To wrap a perl
-# script means that a bash script is created that sets
-# all required environment variables and then calls the perl
-# script using the perl interperter in the kbase runtime.
-# For this to work, both the actual script and the newly 
-# created shell script have to be deployed. When a perl
-# script is wrapped, it is first copied to TARGET/plbin.
-# The shell script can now be created because the necessary
-# environment variables are known and the location of the
-# script is known. 
-
-deploy-scripts:
-	export KB_TOP=$(TARGET); \
-	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
-	export KB_PERL_PATH=$(TARGET)/lib bash ; \
-	for src in $(SRC_PERL) ; do \
-		basefile=`basename $$src`; \
-		base=`basename $$src .pl`; \
-		echo install $$src $$base ; \
-		cp $$src $(TARGET)/plbin ; \
-		$(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/bin/$$base ; \
-	done
-
-
 # Deploying a service refers to to deploying the capability
 # to run a service. Becuase service code is often deployed 
 # as part of the libs, meaning service code gets deployed
