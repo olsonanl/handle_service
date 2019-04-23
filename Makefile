@@ -18,12 +18,6 @@ endif
 SERVICE_PSGI = $(SERVICE_NAME).psgi
 TPAGE_ARGS = --define kb_runas_user=$(SERVICE_USER) --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --define kb_service_name=$(SERVICE_NAME) --define kb_service_dir=$(SERVICE_DIR) --define kb_service_port=$(SERVICE_PORT) --define kb_psgi=$(SERVICE_PSGI)
 
-# to wrap scripts and deploy them to $(TARGET)/bin using tools in
-# the dev_container. right now, these vars are defined in
-# Makefile.common, so it's redundant here.
-TOOLS_DIR = $(TOP_DIR)/tools
-WRAP_PERL_TOOL = wrap_perl
-WRAP_PERL_SCRIPT = bash $(TOOLS_DIR)/$(WRAP_PERL_TOOL).sh
 SRC_PERL = $(wildcard scripts/*.pl)
 
 # You can change these if you are putting your tests somewhere

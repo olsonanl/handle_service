@@ -1,6 +1,5 @@
 package Bio::KBase::AbstractHandle::AbstractHandleImpl;
 use strict;
-use Bio::KBase::Exceptions;
 # Use Semantic Versioning (2.0.0-rc.1)
 # http://semver.org 
 our $VERSION = "0.1.0";
@@ -12,7 +11,7 @@ AbstractHandle
 =head1 DESCRIPTION
 
 The AbstractHandle module provides a programmatic
-access to a remote file store.
+   access to a remote file store.
 
 =cut
 
@@ -131,9 +130,9 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The new_handle function returns a Handle object with a url and a
-node id. The new_handle function invokes the localize_handle
-method first to set the url and then invokes the initialize_handle
-function to get an ID.
+           node id. The new_handle function invokes the localize_handle
+           method first to set the url and then invokes the initialize_handle
+           function to get an ID.
 
 =back
 
@@ -158,8 +157,7 @@ sub new_handle
     (ref($h) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"h\" (value was \"$h\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to new_handle:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'new_handle');
+	die $msg;
     }
     return($h);
 }
@@ -214,7 +212,7 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The localize_handle function attempts to locate a shock server near
-the service. The localize_handle function must be called before the
+            the service. The localize_handle function must be called before the
            Handle is initialized becuase when the handle is initialized, it is
            given a node id that maps to the shock server where the node was
            created. This function should not be called directly.
@@ -233,8 +231,7 @@ sub localize_handle
     (!ref($service_name)) or push(@_bad_arguments, "Invalid type for argument \"service_name\" (value was \"$service_name\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to localize_handle:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'localize_handle');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -263,8 +260,7 @@ sub localize_handle
     (ref($h2) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"h2\" (value was \"$h2\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to localize_handle:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'localize_handle');
+	die $msg;
     }
     return($h2);
 }
@@ -317,7 +313,7 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The initialize_handle returns a Handle object with an ID. This
-function should not be called directly
+           function should not be called directly
 
 =back
 
@@ -332,8 +328,7 @@ sub initialize_handle
     (ref($h1) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"h1\" (value was \"$h1\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to initialize_handle:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'initialize_handle');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -360,8 +355,7 @@ sub initialize_handle
     (ref($h2) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"h2\" (value was \"$h2\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to initialize_handle:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'initialize_handle');
+	die $msg;
     }
     return($h2);
 }
@@ -412,8 +406,8 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The persist_handle writes the handle to a persistent store
-that can be later retrieved using the list_handles
-function.
+           that can be later retrieved using the list_handles
+           function.
 
 =back
 
@@ -428,8 +422,7 @@ sub persist_handle
     (ref($h) eq 'HASH') or push(@_bad_arguments, "Invalid type for argument \"h\" (value was \"$h\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to persist_handle:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'persist_handle');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -519,12 +512,12 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The upload and download functions  provide an empty
-implementation that must be provided in a client. If a concrete
-implementation is not provided an error is thrown. These are
-the equivelant of abstract methods, with runtime rather than
-compile time inforcement.
+           implementation that must be provided in a client. If a concrete
+           implementation is not provided an error is thrown. These are
+           the equivelant of abstract methods, with runtime rather than
+           compile time inforcement.
         
-[client_implemented]
+           [client_implemented]
 
 =back
 
@@ -539,8 +532,7 @@ sub upload
     (!ref($infile)) or push(@_bad_arguments, "Invalid type for argument \"infile\" (value was \"$infile\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to upload:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'upload');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -552,8 +544,7 @@ sub upload
     (ref($h) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"h\" (value was \"$h\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to upload:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'upload');
+	die $msg;
     }
     return($h);
 }
@@ -606,12 +597,12 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The upload and download functions  provide an empty
-implementation that must be provided in a client. If a concrete
-implementation is not provided an error is thrown. These are
-the equivelant of abstract methods, with runtime rather than
-compile time inforcement.
+           implementation that must be provided in a client. If a concrete
+           implementation is not provided an error is thrown. These are
+           the equivelant of abstract methods, with runtime rather than
+           compile time inforcement.
 
-[client_implemented]
+           [client_implemented]
 
 =back
 
@@ -627,8 +618,7 @@ sub download
     (!ref($outfile)) or push(@_bad_arguments, "Invalid type for argument \"outfile\" (value was \"$outfile\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to download:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'download');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -686,11 +676,11 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The upload_metadata function uploads metadata to an existing
-handle. This means that the data that the handle represents
-has already been uploaded. Uploading meta data before the data
-has been uploaded is not currently supported.
+           handle. This means that the data that the handle represents
+           has already been uploaded. Uploading meta data before the data
+           has been uploaded is not currently supported.
 
-[client_implemented]
+           [client_implemented]
 
 =back
 
@@ -706,8 +696,7 @@ sub upload_metadata
     (!ref($infile)) or push(@_bad_arguments, "Invalid type for argument \"infile\" (value was \"$infile\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to upload_metadata:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'upload_metadata');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -765,9 +754,9 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The download_metadata function downloads metadata associated
-with the data handle and writes it to a file.
+           with the data handle and writes it to a file.
 
-[client_implemented]
+           [client_implemented]
 
 =back
 
@@ -783,8 +772,7 @@ sub download_metadata
     (!ref($outfile)) or push(@_bad_arguments, "Invalid type for argument \"outfile\" (value was \"$outfile\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to download_metadata:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'download_metadata');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -840,7 +828,7 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The list function returns the set of handles that were
-created by the user.
+           created by the user.
 
 =back
 
@@ -877,8 +865,7 @@ sub list_handles
     (ref($l) eq 'ARRAY') or push(@_bad_returns, "Invalid type for return variable \"l\" (value was \"$l\")");
     if (@_bad_returns) {
 	my $msg = "Invalid returns passed to list_handles:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'list_handles');
+	die $msg;
     }
     return($l);
 }
@@ -929,7 +916,7 @@ Handle is a reference to a hash where the following keys are defined:
 =item Description
 
 The delete_handles function takes a list of handles
-and deletes them on the handle service server.
+           and deletes them on the handle service server.
 
 =back
 
@@ -944,8 +931,7 @@ sub delete_handles
     (ref($l) eq 'ARRAY') or push(@_bad_arguments, "Invalid type for argument \"l\" (value was \"$l\")");
     if (@_bad_arguments) {
 	my $msg = "Invalid arguments passed to delete_handles:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'delete_handles');
+	die $msg;
     }
 
     my $ctx = $Bio::KBase::AbstractHandle::Service::CallContext;
@@ -953,6 +939,7 @@ sub delete_handles
     #END delete_handles
     return();
 }
+
 
 
 
@@ -991,6 +978,7 @@ sub version {
     return $VERSION;
 }
 
+
 =head1 TYPES
 
 
@@ -1004,16 +992,16 @@ sub version {
 =item Description
 
 Handle provides a unique reference that enables
-access to the data files through functions
-provided as part of the HandleService. In the case of using
-shock, the id is the node id. In the case of using
-shock the value of type is shock. In the future 
-these values should enumerated. The value of url is
-the http address of the shock server, including the
-protocol (http or https) and if necessary the port.
-The values of remote_md5 and remote_sha1 are those
-computed on the file in the remote data store. These
-can be used to verify uploads and downloads.
+           access to the data files through functions
+           provided as part of the HandleService. In the case of using
+           shock, the id is the node id. In the case of using
+           shock the value of type is shock. In the future 
+           these values should enumerated. The value of url is
+           the http address of the shock server, including the
+           protocol (http or https) and if necessary the port.
+           The values of remote_md5 and remote_sha1 are those
+           computed on the file in the remote data store. These
+           can be used to verify uploads and downloads.
 
 
 =item Definition
